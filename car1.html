@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xe 1</title>
+    <link rel="icon" type="image/x-icon" href="./asset/SVG/Artboard 1.svg">
+    <link href="./reset.css" rel="stylesheet">
+    <link href="./car_style.css" rel="stylesheet">
+    <script type="text/javascript" src="script.js"></script>
+</head>
+<body>
+ 
+        <!-- side-bar -->
+     <!-- tren -->
+     <section class="side-bar">
+      <ul class="container">
+          <li class="item" id="avatar"><a href="#"><img src="asset/SVG/avatar.svg" height="40"/></a></li>
+          <li class="item" id="menu"><a href="#"><img src="asset/SVG/menu.svg" height="40"/></a></li>
+          
+          <li class="item" id="bus"><a href="home.html"><img src="asset/SVG/busandcar_yellow.svg" height="40"/></a></li>
+          <li class="item" id="dish"><a href="#"><img src="asset/SVG/dish.svg" height="40"/></a></li>
+          
+      </ul>
+      <!-- duoi -->
+      <ul class="container1" id="setting-container">
+        <li class="item" id="setting"><a href="./setting1.html" target="_blank"><img src="asset/SVG/setting.svg" height="40"/></a></li>
+      </ul>
+   </section>
+  <section class="navmain">
+    <!-- navigation -->
+  <section class="nav-container">
+    <section class="clock">
+     <p><span id="hour"></span>:<span id="minute"></span></p>
+     
+    </section> 
+   
+
+ </section>
+ <!--main  -->
+ <section class="main">
+   <h2>Xe 1 (<span id="numberStudent">0</span>/10)</h2>
+   <form class="form">
+     <button>
+         <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">
+             <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round"></path>
+         </svg>
+     </button>
+     <input class="input" placeholder="Tìm kiếm ..." required="" type="text">
+     <button class="reset" type="reset">
+         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+         </svg>
+     </button>
+ </form>
+ <table id="table">
+   <tr>
+       <th scope="col">stt</th>
+       <th scope="col">Tên</th>
+       <th scope="col">Giờ lên</th>
+       <th scope="col">Giờ xuống</th>
+   </tr>
+   <tr id="_1">
+       <td>1</td>
+       <td>Lưu Thịnh Khang 1</td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr id="_2">
+       <td>2</td>
+       <td>khang1</td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr id="_3">
+       <td>3</td>
+       <td>khang1</td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr id="_4">
+       <td>4</td>
+       <td>khang</td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr id="_5">
+       <td>5</td>
+       <td>khang</td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr id="_6">
+       <td>6</td>
+       <td>khang</td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr id="_7">
+       <td>7</td>
+       <td>khang</td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr id="_8">
+       <td>8</td>
+       <td>khang</td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr id="_9">
+       <td>9</td>
+       <td>khang</td>
+       <td></td>
+       <td></td>
+   </tr>
+   <tr id="_10">
+       <td>10</td>
+       <td>khang</td>
+       <td></td>
+       <td></td>
+   </tr>
+  
+</table>
+  
+ </section>
+  </section>
+  <!-- check -->
+  <script>
+    function Time(){
+    let hour = document.getElementById("hour"); 
+  let d=new Date();
+  hour.innerHTML=update(d.getHours());
+  document.getElementById('minute').innerHTML=update(d.getMinutes());
+  setTimeout(Time, 1000);
+  }
+  Time()
+function update(time){
+  time=(time<10)? '0'+time:time;
+  return time;
+}
+
+    let checkin = new Array(10);
+    checkin=checkin.fill(0);
+    let clientServer = new WebSocket('ws://localhost:8080')
+   
+    function updateStudent(index){
+        document.getElementById('table').rows[index].style.backgroundColor='#fff0e5';
+    }
+    function returnStudent(index){
+        document.getElementById('table').rows[index].style.backgroundColor='#faf7f5';
+    }
+    clientServer.onmessage = (event) => {
+   
+        console.log('Received data:', event.data);
+        let {type,payload}=JSON.parse(event.data);
+        if(type=='NEW_MESSAGE')
+       {
+        let index = Number(payload.message);
+        let hour=payload.hour;
+        let minute=payload.minute;
+        let second=payload.second;
+        if(!checkin[index]){
+            updateStudent(index);
+            checkin[index]++;
+            updateNumOfStudent();
+            
+            showTimeCheckin(index,hour,minute,second);
+        } else {
+            returnStudent(index);
+            checkin[index]--;
+            updateNumOfStudent();
+               
+            showTimeCheckout(index,hour,minute,second);
+        }
+       }
+
+};
+
+
+    clientServer.onopen=()=> {console.log('new WS connec')}
+
+    clientServer.onclose = (event) => {
+        clientServer = null;
+      }
+
+      // .onerror is executed when error event occurs on the WebSocket connection
+      clientServer.onerror = (event) => {
+       clientServer = null;
+      }
+
+
+      // update number of student
+
+    function updateNumOfStudent(){
+        document.getElementById("numberStudent").innerHTML=checkin.reduce((a,b)=>a+b);
+    }
+    function showTimeCheckin(index,hour,minute,second){
+        hour=update(hour);
+        minute=update(minute);
+        second=update(second);
+        let table=document.getElementById('table');
+        table.rows[index].cells[2].innerHTML+='\n'+hour + ':' + minute+':' +second;
+        
+    }
+    function showTimeCheckout(index,hour,minute,second){
+        hour=update(hour);
+        minute=update(minute);
+        second=update(second);
+        let table=document.getElementById('table');
+    
+        table.rows[index].cells[3].innerHTML+='\n'+hour + ':' + minute+':'+second;
+    }
+    // function sendNumberToServer(number){
+    //     new_message={
+    //         type:'NUMBER_OF_STUDENT_1',
+    //         payload:{number:number}
+    //     }
+    //     clientServer.send(JSON.stringify(new_message))
+    // }
+
+  </script>
+  
+   
+
+
+</body>
+</html>

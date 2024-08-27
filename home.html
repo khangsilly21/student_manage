@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="icon" type="image/x-icon" href="./asset/SVG/Artboard 1.svg">
+    <link href="./reset.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+  </head>
+<body>
+ 
+        <!-- side-bar -->
+     <!-- tren -->
+     <section class="side-bar">
+      <ul class="container">
+          <li class="item" id="avatar"><a href="#"><img src="asset/SVG/avatar.svg" height="40"/></a></li>
+          <li class="item" id="menu"><a href="#"><img src="asset/SVG/menu.svg" height="40"/></a></li>
+          
+          <li class="item" id="bus"><a href="#"><img src="asset/SVG/busandcar.svg" height="40"/></a></li>
+          <li class="item" id="dish"><a href="#"><img src="asset/SVG/dish.svg" height="40"/></a></li>
+          
+      </ul>
+      <!-- duoi -->
+      <ul class="container1" id="setting-container">
+        <li class="item" id="setting"><a href="./setting1.html" target="_blank"><img src="asset/SVG/setting.svg" height="40"/></a></li>
+      </ul>
+   </section>
+  <!-- navigation -->
+  <section class="mainnav">
+    <section class="nav-container">
+      <section class="clock">
+       <p><span id="hour"></span>:<span id="minute"></span></p>
+       
+      </section> 
+     
+ 
+   </section>
+   <!--main  -->
+   <section class="main">
+     <h2>Trang quản lý học sinh trên xe đưa đón</h2>
+     <form class="form">
+       <button>
+           <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">
+               <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round"></path>
+           </svg>
+       </button>
+       <input style=" font-size:1.3rem;" class="input" placeholder="Tìm kiếm ..." required="" type="text">
+       <button class="reset" type="reset">
+           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+           </svg>
+       </button>
+   </form>
+     
+     <section class="grid">
+       <a href="./car1.html" target="_blank">
+         <section class="box">
+         <p>Xe 1 (<span id='numStudentOfCar1'>0</span>/10)</p>
+         <section class="space"></section>
+       </section>
+     </a>
+     <a href="./car2.html" target="_blank">
+       <section class="box">
+       <p>Xe 2 (<span id='numStudentOfCar2'>0</span>/10)</p>
+       <section class="space"></section>
+     </section>
+   </a>
+   <a href="./car3.html" target="_blank">
+     <section class="box">
+     <p>Xe 3 (<span id='numStudentOfCar3'>0</span>/10)</p>
+     <section class="space"></section>
+   </section>
+ </a>
+ <a href="./car4.html" target="_blank">
+   <section class="box">
+   <p>Xe 4 (<span id='numStudentOfCar4'>0</span>/10)</p>
+   <section class="space"></section>
+ </section>
+ </a>
+     </section>
+   </section>
+  </section>
+  <script>
+    function Time(){
+    let hour = document.getElementById("hour"); 
+  let d=new Date();
+  hour.innerHTML=update(d.getHours());
+  document.getElementById('minute').innerHTML=update(d.getMinutes());
+  setTimeout(Time, 1000);
+  }
+  Time()
+function update(time){
+  time=(time<10)? '0'+time:time;
+  return time;
+}
+//socket
+let homeClient = new WebSocket('ws://localhost:8080')
+homeClient.onmessage=(event)=>{
+  let {type,payload}=JSON.parse(event.data);
+  
+  // if (type=='NUMBER_OF_STUDENT_1'){
+  //   let number=payload.number;
+  //   updateBox(1,number);
+  // }
+  // if (type=='NUMBER_OF_STUDENT_2'){
+  //   let number=payload.number;
+  //   updateBox(2,number);
+  // }
+  if(type=='NEW_MESSAGE_2'){
+    let checkin=payload.checkin;
+    if(checkin) updateBox(2,-1);
+    else updateBox(2,1)
+    }
+    if(type=='NEW_MESSAGE'){
+    let checkin=payload.checkin;
+    if(checkin) updateBox(1,-1);
+    else updateBox(1,1)
+    }
+}
+
+function updateBox(index,number){
+  let id='numStudentOfCar'+String(index);
+  document.getElementById(id).innerHTML=Number(document.getElementById(id).innerHTML)+number;
+  if(Number(document.getElementById(id).innerHTML)){
+    document.getElementsByClassName('box')[index-1].style.backgroundColor='#c9d6ef';
+  } else {
+    document.getElementsByClassName('box')[index-1].style.backgroundColor='#e4e7ed';
+  }
+  
+}
+  </script>
+  
+   
+
+
+</body>
+</html>

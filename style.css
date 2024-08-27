@@ -1,0 +1,239 @@
+body{
+  background-color: #f5f5f5;
+  
+}
+.side-bar{
+    position: fixed;
+    left:0;
+    height: 100%;
+    background-color: #ebebeb;
+    
+    box-shadow: #afafdc 0px 2px 3px;
+    
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    
+    
+    height: 88%;
+    z-index: 10;
+}
+.item {
+    padding: 20px 10px ;
+}
+#avatar:hover,#menu:hover,#dish:hover,#setting:hover{
+  background-color:#fff;
+  
+  border-bottom: #5d61c7 solid 4px;
+}
+#avatar,#menu{
+    opacity: 0.7;
+    padding-bottom: 30px;
+}
+
+#bus{
+    background-color:#fff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
+    border-bottom: #9698dd solid 4px;
+}
+
+#dish{
+    padding-top:30px ;
+}
+.main{
+    position: relative;
+    left:63px;
+    top: 80px;
+    overflow: auto;
+    width: calc(100% - 73px);
+   
+}
+.mainnav{
+ 
+  background-image: url('asset/backgr.jpg');
+}
+.nav-container{
+    position: fixed;
+    width: calc(100% - 69px);
+    left:63px;
+    z-index: 5;
+    height: 80px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+/*     
+    background-image: linear-gradient(#e7e7e7,#ebeae9) */
+    
+   
+}
+.clock{
+    margin-right: 7%;
+}
+.clock p{
+    font-size: 2.5rem;
+    background-color:transparent;
+    padding: 10px 30px;
+    border-radius: 12px;
+    
+}
+
+.main h2{
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+    font-family:'Courier New', Courier, monospace;
+    padding-top: 20px ;
+    padding-bottom: 30px;
+    
+}
+
+
+.form button {
+    border: none;
+    background: none;
+    color: #8b8ba7;
+  }
+  
+.form {
+    --timing: 0.3s;
+    --width-of-input: 200px;
+    --height-of-input: 60px;
+    --border-height: 2px;
+    --input-bg: #fff;
+    --border-color: #2f2ee9;
+    --border-radius: 30px;
+    --after-border-radius: 1px;
+    position: relative;
+    width: var(--width-of-input);
+    height: var(--height-of-input);
+    display: flex;
+    align-items: center;
+    padding-inline: 0.8em;
+    border-radius: var(--border-radius);
+    transition: border-radius 0.5s ease;
+    background: var(--input-bg,#fff);
+  }
+  /* styling of Input */
+  .input {
+    font-size: 0.9rem;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    padding-inline: 0.5em;
+    padding-block: 0.7em;
+    border: none;
+  }
+  /* styling of animated border */
+  .form:before {
+    content: "";
+    position: absolute;
+    background: var(--border-color);
+    transform: scaleX(0);
+    transform-origin: center;
+    width: 100%;
+    height: var(--border-height);
+    left: 0;
+    bottom: 0;
+    border-radius: 1px;
+    transition: transform var(--timing) ease;
+  }
+ 
+  .form:focus-within {
+    border-radius: var(--after-border-radius);
+  }
+  
+  input:focus {
+    outline: none;
+  }
+  
+  .form:focus-within:before {
+    transform: scale(1);
+  }
+  /* styling of close button */
+  /* == you can click the close button to remove text == */
+  .reset {
+    border: none;
+    background: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+  /* close button shown when typing */
+  input:not(:placeholder-shown) ~ .reset {
+    opacity: 1;
+    visibility: visible;
+  }
+  /* sizing svg icons */
+  .form svg {
+    width: 17px;
+    margin-top: 3px;
+  }
+.form{
+    margin: 10px auto;
+    background-color: #e9ebee;
+    width:70%
+    
+}
+
+.grid{
+    display: grid;
+    height: 800px; 
+    width:100%;
+    
+    /* background-color: #f5f5f5; */
+    grid-template-rows: 40% 40%;
+    grid-template-columns: 35% 35%;
+    gap:40px 60px;
+    
+    justify-content: center;
+    align-content: center;
+}
+.box{
+    display:flex;
+    flex-direction: column;
+    height:90%;
+    border: solid 1px transparent;
+    margin: 0;
+    background-color: #e4e7ed;
+    border-radius: 20px;
+
+}
+.box p{
+    font-family:'Courier New', Courier, monospace;
+    font-size: 1.9rem;
+    font-weight: 600;
+    opacity: 0.7;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom:solid 1px #cfd2d6;
+    color: #101050;
+}
+.box .space{
+    
+}
+a {
+    color: inherit; 
+    text-decoration: inherit; 
+  }
+
+a section:hover{
+    background-color: rgba(192, 192, 241, 0.5);
+    color: #fff;
+}
+table{
+  margin:10px auto;
+  border: solid 1px #7b7bd9;
+  margin-top: 30px;
+}
+th,td{
+  padding: 20px 100px;
+  font-size: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  border: solid 1px #7b7bd9;
+}
+th{
+  font-size: 22px;
+  font-weight: 600;
+}
